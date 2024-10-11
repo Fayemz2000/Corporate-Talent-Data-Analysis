@@ -1,0 +1,101 @@
+1. Import necessary libraries and load data
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+
+* Load the datasets
+talent_data = pd.read_csv('talent_metrics.csv')  # Hypothetical talent metrics dataset
+sentiment_data = pd.read_csv('employee_sentiment.csv')  # Hypothetical sentiment dataset
+
+* Display the first few rows of each dataset to understand the structure
+print(talent_data.head())
+print(sentiment_data.head())
+Explanation:
+* We import essential libraries: pandas for data manipulation, matplotlib and seaborn for visualization, and StandardScaler and PCA for preprocessing and dimensionality reduction.
+* talent_data contains data related to talent metrics (e.g., tenure, promotion, turnover).
+* sentiment_data holds employee sentiment metrics (e.g., satisfaction, engagement).
+
+2. Clean the data
+* Check for missing data and handle missing values
+print(talent_data.isnull().sum())
+print(sentiment_data.isnull().sum())
+
+* Filling missing values with appropriate strategies
+talent_data.fillna(talent_data.median(), inplace=True)
+sentiment_data.fillna(sentiment_data.mean(), inplace=True)
+Explanation:
+* We check for missing values in both datasets using isnull().
+* Missing values are filled using the median for talent metrics and the mean for sentiment scores.
+
+3. Exploratory Data Analysis (EDA) and Visualization
+* Visualizing trends in talent metrics (turnover rates, promotions)
+plt.figure(figsize=(10, 5))
+sns.lineplot(data=talent_data, x='Year', y='Turnover_Rate', label='Turnover Rate')
+sns.lineplot(data=talent_data, x='Year', y='Promotion_Rate', label='Promotion Rate')
+plt.title('Turnover and Promotion Rates Over Time')
+plt.xlabel('Year')
+plt.ylabel('Rate')
+plt.legend()
+plt.show()
+
+* Employee sentiment trends (satisfaction, engagement)
+plt.figure(figsize=(10, 5))
+sns.lineplot(data=sentiment_data, x='Year', y='Satisfaction', label='Satisfaction')
+sns.lineplot(data=sentiment_data, x='Year', y='Engagement', label='Engagement')
+plt.title('Employee Satisfaction and Engagement Over Time')
+plt.xlabel('Year')
+plt.ylabel('Score')
+plt.legend()
+plt.show()
+Explanation:
+* We plot trends in turnover and promotion rates over time. If we notice sharp increases in turnover or drops in promotion rates, these could indicate potential problems.
+* Similarly, we visualize employee satisfaction and engagement over time. Sudden drops in satisfaction or engagement are red flags.
+
+4. Detect anomalies and trends in the data
+* Detecting anomalies using standard deviation for turnover and performance ratings
+threshold = 2  # Define a threshold for anomaly detection
+turnover_anomalies = talent_data[np.abs(talent_data['Turnover_Rate'] - talent_data['Turnover_Rate'].mean()) > threshold * talent_data['Turnover_Rate'].std()]
+print("Anomalous turnover rates:\n", turnover_anomalies)
+
+* Correlating sentiment with performance
+correlation_matrix = pd.concat([talent_data['Performance_Rating'], sentiment_data['Satisfaction'], sentiment_data['Engagement']], axis=1).corr()
+print("Correlation between performance and sentiment:\n", correlation_matrix)
+Explanation:
+* We detect anomalies in turnover rates by using the standard deviation method. If any turnover rates deviate significantly from the mean, they are flagged as anomalies.
+* We calculate correlations between performance ratings and employee sentiment (satisfaction, engagement). Strong correlations indicate that sentiment may be influencing employee performance.
+
+5. Dimensionality reduction and advanced analysis using PCA
+* Combine both datasets for dimensionality reduction and pattern recognition
+combined_data = pd.concat([talent_data[['Turnover_Rate', 'Performance_Rating', 'Absenteeism']], sentiment_data[['Satisfaction', 'Engagement']]], axis=1)
+
+* Standardize the data
+scaler = StandardScaler()
+scaled_data = scaler.fit_transform(combined_data)
+
+* Apply PCA for dimensionality reduction
+pca = PCA(n_components=2)
+pca_data = pca.fit_transform(scaled_data)
+
+* Visualize the PCA components
+plt.figure(figsize=(8, 6))
+plt.scatter(pca_data[:, 0], pca_data[:, 1], c=sentiment_data['Satisfaction'], cmap='viridis', label='Employee Satisfaction')
+plt.colorbar()
+plt.title('PCA of Talent Metrics and Employee Sentiment')
+plt.xlabel('PCA Component 1')
+plt.ylabel('PCA Component 2')
+plt.show()
+Explanation:
+* We standardize the data using StandardScaler to ensure all features have a mean of 0 and a standard deviation of 1, which is crucial for PCA.
+* PCA (Principal Component Analysis) is used to reduce the dimensionality of the combined talent and sentiment data, helping us identify patterns and relationships.
+* We plot the PCA components to visualize clusters or trends that could reveal insights about employee behavior or company performance.
+
+Insights and recommendations
+Based on the analysis, here are some potential insights:
+1. High Turnover Anomalies: If we find that certain years or departments have significantly higher turnover, we should investigate possible causes such as low employee engagement or dissatisfaction. Action: Talent leaders should consider exit interviews and employee surveys to address the underlying causes.
+2. Correlation Between Sentiment and Performance: If there is a strong positive correlation between employee satisfaction and performance ratings, it suggests that improving employee sentiment could directly boost productivity. Action: Business leaders should focus on initiatives to improve work-life balance, recognition programs, and employee development.
+3. Low Satisfaction in Certain Teams: If we observe dips in satisfaction or engagement in specific departments or time periods, we should investigate potential issues such as workload, management style, or team dynamics. Action: Talent leaders can introduce targeted interventions like team-building activities or one-on-one coaching sessions.
+Conclusion
+By analyzing both talent metrics and employee sentiment, we can gain valuable insights into the health of a company’s workforce. The code above allows us to detect anomalies in turnover and performance, identify correlations between employee sentiment and company outcomes, and apply advanced techniques like PCA to uncover deeper trends. These insights enable talent and business leaders to make data-driven decisions to improve retention, performance, and overall employee satisfaction.
