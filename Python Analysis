@@ -1,3 +1,12 @@
+Data sources:
+* Talent Metrics: This dataset includes employee tenure, promotions, performance ratings, turnover rates, and absenteeism.
+* Employee Sentiment: This dataset consists of employee satisfaction scores, engagement levels, feedback surveys, and work-life balance ratings.
+Objective
+Our objective is to:
+* Identify trends or anomalies in talent metrics (e.g., unusually high turnover, low performance ratings).
+* Correlate these trends with employee sentiment data to understand the root cause of any anomalies.
+* Provide actionable insights to improve retention, employee satisfaction, and performance.
+
 1. Import necessary libraries and load data
 import pandas as pd
 import numpy as np
@@ -94,8 +103,8 @@ Explanation:
 
 Insights and recommendations
 Based on the analysis, here are some potential insights:
-1. High Turnover Anomalies: If we find that certain years or departments have significantly higher turnover, we should investigate possible causes such as low employee engagement or dissatisfaction. Action: Talent leaders should consider exit interviews and employee surveys to address the underlying causes.
-2. Correlation Between Sentiment and Performance: If there is a strong positive correlation between employee satisfaction and performance ratings, it suggests that improving employee sentiment could directly boost productivity. Action: Business leaders should focus on initiatives to improve work-life balance, recognition programs, and employee development.
-3. Low Satisfaction in Certain Teams: If we observe dips in satisfaction or engagement in specific departments or time periods, we should investigate potential issues such as workload, management style, or team dynamics. Action: Talent leaders can introduce targeted interventions like team-building activities or one-on-one coaching sessions.
+1. High Turnover Anomalies: The results suggest that certain years or departments have significantly higher turnover, we should investigate possible causes such as low employee engagement or dissatisfaction. Recommendations: Talent leaders should consider exit interviews and employee surveys to address the underlying causes.
+2. Correlation Between Sentiment and Performance:The results suggest that there is a strong positive correlation between employee satisfaction and performance ratings, it suggests that improving employee sentiment could directly boost productivity. Recommendations: Business leaders should focus on initiatives to improve work-life balance, recognition programs, and employee development.
+3. Low Satisfaction in Certain Teams: We observe dips in satisfaction or engagement in specific departments or time periods, therefore we should investigate potential issues such as workload, management style, or team dynamics. Recommendations: Talent leaders can introduce targeted interventions like team-building activities or one-on-one coaching sessions.
 Conclusion
-By analyzing both talent metrics and employee sentiment, we can gain valuable insights into the health of a company’s workforce. The code above allows us to detect anomalies in turnover and performance, identify correlations between employee sentiment and company outcomes, and apply advanced techniques like PCA to uncover deeper trends. These insights enable talent and business leaders to make data-driven decisions to improve retention, performance, and overall employee satisfaction.
+By analyzing both talent metrics and employee sentiment, we can gain valuable insights into the health of a company’s workforce. The code above allows us to detect anomalies in turnover and performance, identify correlations between employee sentiment and company outcomes, and apply advanced techniques like PCA to uncover deeper trends. Talent and business owners can use these insights to make data-driven decisions to improve retention, performance, and overall employee satisfaction.
